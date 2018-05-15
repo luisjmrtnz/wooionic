@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { WoocommerceProvider } from '../../providers/woocommerce/woocommerce';
 
 @Component({
@@ -8,12 +8,29 @@ import { WoocommerceProvider } from '../../providers/woocommerce/woocommerce';
 })
 export class HomePage {
 
-  constructor(public wc: WoocommerceProvider) {}
+  products: any[];
+  title: string;
 
-  async ionViewDidEnter() {
-    this.wc.getProducts()
-      .then(data => console.log(data))
-      .catch(e => console.log(JSON.stringify(e)));
+  constructor(
+    public wc: WoocommerceProvider,
+    public params: NavParams) {
+      this.title = 'Home';
+    }
+
+  async ionViewWillEnter() {
+    const cat = this.params.get('category');
+    try {
+      const products: any[] = await this.wc.getProducts();
+      if(cat) {
+        this.title = cat;
+        this.products = products.filter(p => p.categories[0].name === cat);
+      } else {
+        this.products = products;
+      }
+      console.log(this.products);
+    } catch(e) {
+      console.log(JSON.stringify(e));
+    }
   }
 
 }
