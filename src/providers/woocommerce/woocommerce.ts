@@ -20,7 +20,7 @@ export class WoocommerceProvider {
       if(!this.products){
         const data = await this.woocommerce.getAsync('products?per_page=30');
         this.products = JSON.parse(data.body);
-      }
+      };
       return this.products;
     } catch(e){
       throw(e);
@@ -30,7 +30,7 @@ export class WoocommerceProvider {
   async getCategories(){
     try{
       if(!this.categories) {
-        const data = await this.woocommerce.getAsync('products/categories');
+        const data = await this.woocommerce.getAsync('products/categories')
         this.categories = JSON.parse(data.body);
       }
       return this.categories;
