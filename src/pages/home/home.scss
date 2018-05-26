@@ -2,4 +2,12 @@ page-home {
     .price_tag {
         opacity: 0.7;
     }
+    ion-card.card {
+        width: 100%;
+        margin: 0;
+        height: 100%;
+    }
+    ion-card-title.card-title {
+        font-size: 1.6rem;
+    }
 }

@@ -22,7 +22,11 @@ export class HomePage {
   async ionViewDidEnter() {
     const cat = this.params.get('category');
     const loading = this.loader.create({ content: 'Cargango Productos...' });
-    loading.present();
+    
+    if(!this.products) {
+      loading.present();
+    }
+
     try {
       const products: any[] = await this.wc.getProducts();
       if(cat) {
@@ -31,8 +35,9 @@ export class HomePage {
       } else {
         this.products = products;
       }
-      console.log(products);
-      loading.dismiss();
+
+      if(loading) 
+        loading.dismiss();
     } catch(e) {
       console.log(JSON.stringify(e));
     }
